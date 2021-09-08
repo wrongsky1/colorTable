@@ -1,0 +1,27 @@
+.tableRow {
+    box-shadow: 0px 0px 3px 0px rgb(0 0 0 / 20%);
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.tableRow td {
+    text-align: center;
+}
+
+.button {
+    border: 0;
+    padding: 5px;
+    color: black;
+    background: transparent;
+    cursor: pointer;
+}
+
+.button:hover {
+    opacity: 0.6;
+}
+
+@media screen and (max-width: 450px) {
+    .tableRow td {
+        font-size: 10px;
+    }
+}
