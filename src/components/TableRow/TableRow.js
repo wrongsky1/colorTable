@@ -11,34 +11,34 @@ export default function TableRow({
     onEditClick,
 }) {
     return (
-        <tr className={classes.tableRow}>
-            <td
+        <div className={classes.tableRow}>
+            <div
                 style={{
                     backgroundColor: `${color}`,
-                    minWidth: "40px",
+                    width: "40px",
+                    height: "40px",
+                    marginLeft: "5px",
                 }}
-            ></td>
-            <td>{name}</td>
-            <td>{type}</td>
-            <td>{color}</td>
-            <td>
-                <button
-                    className={classes.button}
-                    type='button'
-                    onClick={onEditClick}
-                >
-                    <ColorizeIcon />
-                </button>
-            </td>
-            <td>
-                <button
-                    className={classes.button}
-                    type='button'
-                    onClick={onDeleteClick}
-                >
-                    <DeleteForeverIcon />
-                </button>
-            </td>
-        </tr>
+            ></div>
+            <p className={classes.name}>{name}</p>
+            <p className={classes.type}>{type}</p>
+            <p className={classes.color}> {color}</p>
+
+            <button
+                className={classes.button}
+                type='button'
+                onClick={onEditClick}
+            >
+                <ColorizeIcon />
+            </button>
+
+            <button
+                className={classes.button}
+                type='button'
+                onClick={onDeleteClick}
+            >
+                <DeleteForeverIcon />
+            </button>
+        </div>
     );
 }

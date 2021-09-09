@@ -30,7 +30,16 @@
     padding: 10px;
 }
 
-.content thead tr th {
+.content ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 15px 0 5px;
+}
+
+.content ul li {
+    list-style: none;
+    width: 50px;
     height: 40px;
     text-align: center;
     text-transform: uppercase;
@@ -65,13 +74,19 @@
         font-size: 14px;
         line-height: 17px;
     }
-    .content thead tr th {
+    .content ul li {
         font-size: 10px;
     }
-    .content thead tr th:nth-of-type(5) {
+}
+
+@media screen and (max-width: 650px) {
+    .content ul li:nth-of-type(1) {
         font-size: 0;
     }
-    .content thead tr th:nth-of-type(6) {
+    .content ul li:nth-of-type(5) {
+        font-size: 0;
+    }
+    .content ul li:nth-of-type(6) {
         font-size: 0;
     }
 }

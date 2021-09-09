@@ -6,7 +6,7 @@ import TableRow from "../TableRow/TableRow";
 import AddIcon from "@material-ui/icons/Add";
 import Select from "../Select/Select";
 
-const TABLE_DATA = "";
+const TABLE_DATA = "tableData";
 
 const nameSort = (a, b) => {
     if (a.name > b.name) {
@@ -34,6 +34,7 @@ export default class Table extends React.Component {
         isPopupOpen: false,
         editedRow: null,
         selectedSort: "",
+        currentRow: data[0],
     };
 
     componentDidMount() {
@@ -118,6 +119,35 @@ export default class Table extends React.Component {
         });
     };
 
+    dragStartHandler = (e, row) => {
+        this.setState((prevState) => ({
+            ...prevState,
+            currentRow: row,
+        }));
+    };
+
+    dragEndHandler = (e) => {
+        e.target.style.boxShadow = "none";
+    };
+
+    dragOverHandler = (e, row) => {
+        e.preventDefault();
+        e.target.style.boxShadow = "0 2px 3px gray";
+    };
+
+    dropHandler = (e, row) => {
+        e.preventDefault();
+        const currentIndex = this.state.data.indexOf(this.state.currentRow);
+        const dropIndex = this.state.data.indexOf(row);
+        this.setState((prevState) => {
+            const newData = prevState.data.slice();
+            newData.splice(currentIndex, 1);
+            newData.splice(dropIndex + 1, 0, this.state.currentRow);
+            return { ...prevState, data: newData };
+        });
+        e.target.style.boxShadow = "none";
+    };
+
     render() {
         return (
             <>
@@ -151,45 +181,88 @@ export default class Table extends React.Component {
                         ]}
                     />
 
-                    <table className={classes.content}>
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Название</th>
-                                <th>Тип</th>
-                                <th>Код</th>
-                                <th>Изменить</th>
-                                <th>Удалить</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <div className={classes.content}>
+                        <ul>
+                            <li
+                                style={{
+                                    width: "40px",
+                                }}
+                            >
+                                Цвет
+                            </li>
+                            <li
+                                style={{
+                                    width: "100px",
+                                }}
+                            >
+                                Название
+                            </li>
+                            <li
+                                style={{
+                                    width: "80px",
+                                }}
+                            >
+                                Тип
+                            </li>
+                            <li
+                                style={{
+                                    width: "80px",
+                                }}
+                            >
+                                Код
+                            </li>
+                            <li>Изменить</li>
+                            <li>Удалить</li>
+                        </ul>
+                        <div>
                             {this.state.data.length ? (
                                 this.state.data.map((row, index) => (
-                                    <TableRow
+                                    <div
+                                        style={{
+                                            display: "flex",
+
+                                            maxWidth: "100%",
+                                        }}
                                         key={`${row.name}${index}`}
-                                        name={row.name}
-                                        type={row.type}
-                                        color={row.color}
-                                        onDeleteClick={() =>
-                                            this.handleDeleteButtonClick(row)
+                                        draggable={true}
+                                        onDragStart={(e) =>
+                                            this.dragStartHandler(e, row)
                                         }
-                                        onEditClick={() =>
-                                            this.handleEditButtonClick(row)
+                                        onDragLeave={(e) =>
+                                            this.dragEndHandler(e)
                                         }
-                                    />
+                                        onDragEnd={(e) =>
+                                            this.dragEndHandler(e)
+                                        }
+                                        onDragOver={(e) =>
+                                            this.dragOverHandler(e, row)
+                                        }
+                                        onDrop={(e) => this.dropHandler(e, row)}
+                                    >
+                                        <TableRow
+                                            name={row.name}
+                                            type={row.type}
+                                            color={row.color}
+                                            onDeleteClick={() =>
+                                                this.handleDeleteButtonClick(
+                                                    row
+                                                )
+                                            }
+                                            onEditClick={() =>
+                                                this.handleEditButtonClick(row)
+                                            }
+                                        />
+                                    </div>
                                 ))
                             ) : (
-                                <tr>
-                                    <td
-                                        className={classes.emptyCell}
-                                        colSpan='6'
-                                    >
+                                <div>
+                                    <p className={classes.emptyCell}>
                                         Нет данных
-                                    </td>
-                                </tr>
+                                    </p>
+                                </div>
                             )}
-                        </tbody>
-                    </table>
+                        </div>
+                    </div>
                 </div>
                 {this.state.isPopupOpen && this.state.editedRow ? (
                     <Popup
