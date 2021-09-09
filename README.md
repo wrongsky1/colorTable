@@ -1,3 +1,16 @@
+# Таблица данных
+
+Ссылка на тестовый [проект](https://wrongsky1.github.io/colorTable).
+
+Данные — массив записей. Каждая запись — объект со значениями: name, type, color.
+
+Реализован следующий функционал:
+
+1. Просмотр, добавление, изменение, удаление данных, в том числе изменение порядка записей при помощи сортировки и dragAndDrop.
+2. Загрузка и сохранение данных в localstorage на кнопку "сохранить".
+3. Кроссбраузерность, адаптивность
+4. Цвет возможно изменять с помощью colorpicker.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
